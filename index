@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Simran ❤️</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            /* --- NEW BACKGROUND CSS --- */
+            background: 
+                /* Layer 1: Added soft red hearts */
+                radial-gradient(circle at 20% 35%, rgba(255, 40, 40, 0.5) 0%, transparent 12%),
+                radial-gradient(circle at 75% 65%, rgba(255, 40, 40, 0.5) 0%, transparent 15%),
+                radial-gradient(circle at 50% 85%, rgba(255, 40, 40, 0.5) 0%, transparent 10%),
+                /* Layer 2: Made the pink overlay stronger (0.7 -> 0.8) for "10% more pink" */
+                linear-gradient(rgba(255, 240, 243, 0.8), rgba(255, 240, 243, 0.8)), 
+                /* Layer 3: The original background image */
+                url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            /* --------------------------- */
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            z-index: 10;
+            border: 2px solid #ffb3c1;
+        }
+
+        .bunny-icon { 
+            font-size: 120px; 
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h1 { color: #d63384; font-size: 28px; margin-bottom: 20px; }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            min-height: 60px;
+        }
+
+        button {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        #noBtn {
+            background-color: #808080;
+            color: white;
+            position: absolute;
+            transition: all 0.15s ease-out;
+        }
+
+        .hidden { display: none; }
+        
+        #couplePhoto {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 4px solid #ffb3c1;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .subtext {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #d63384;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="romanticSong">
+        <source src="perfect.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card" id="mainCard">
+        <div class="bunny-icon">🐰</div>
+        <h1>Simran, will you be my valentine?</h1>
+        
+        <div class="buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+        <p class="subtext">"No" seems a bit shy 🫣😈</p>
+    </div>
+
+    <div class="card hidden" id="successCard">
+        <div class="bunny-icon">🐰</div>
+        <h1>I love you baby 🌹💖</h1>
+        <p><i>"I found a love for me..."</i> 🎶</p>
+        <img src="us.jpg" id="couplePhoto" alt="Us ❤️">
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const mainCard = document.getElementById('mainCard');
+        const successCard = document.getElementById('successCard');
+        const song = document.getElementById('romanticSong');
+
+        const moveButton = () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        };
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
+
+        yesBtn.addEventListener('click', () => {
+            mainCard.classList.add('hidden');
+            successCard.classList.remove('hidden');
+            
+            song.play().catch(error => console.log("Audio play failed:", error));
+
+            confetti({
+                particleCount: 250,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ffb3c1', '#ffffff']
+            });
+        });
+    </script>
+</body>
+</html>
